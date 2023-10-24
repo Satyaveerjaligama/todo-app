@@ -2,13 +2,62 @@
 
 .tasksBox {
     margin-top: 100px;
+    .addTaskBtn {
+        border-radius: 10px;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        text-transform: capitalize;
+        background-color: main.$blue;
+        box-shadow: 4px 4px 0px #1b6580;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .addTaskBtn:active {
+        box-shadow: 0px 0px 0px main.$blue;
+        transform: translateX(4px) translateY(4px);
+    }
 }
 
 .singleTaskCard {
     padding: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
+    box-shadow: 0px 0px 3px black !important;
+    border-radius: 12px !important;
     p {
         font-family: main.$text-primary;
+    }
+
+    .taskSubject {
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+}
+
+.addTaskModal {
+    .addTaskBox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 40vw;
+        background-color: white;
+        border-radius: 10px;
+        padding: 24px;
+
+        .btn-container {
+            text-align: center;
+            .btn {
+                width: 90%;
+                border-radius: 10px;
+                text-align: center;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    .taskTitle, .taskDescription, .taskDate {
+        width: 100%;
+        margin-bottom: 10px;
     }
 }
