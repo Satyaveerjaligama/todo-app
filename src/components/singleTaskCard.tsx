@@ -1,12 +1,25 @@
-import {Card, Typography} from "@mui/material"
+import {Box, Card, Typography} from "@mui/material"
+import { taskObjectProps } from "../utils/contants";
+import ModeEditOutlineRoundedIcon from '@mui/icons-material/ModeEditOutlineRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
-const SingleTaskCard = () => {
+interface singleTaskCardProps {
+    taskDetails: taskObjectProps,
+    index: number,
+    editTaskDetails: (index: number) => void,
+}
+
+const SingleTaskCard = (props: singleTaskCardProps) => {
+    const {taskDetails, index, editTaskDetails} = props;
     return (
         <Card className="singleTaskCard">
-            <Typography className="taskSubject">Sample</Typography>
-            <Typography className="taskStatus">Status</Typography>
-            <Typography className="taskDate">Date</Typography>
-            <Typography className="taskIcons">Icons</Typography>
+            <Typography className="taskSubject">{taskDetails.taskTitle}</Typography>
+            <Typography className="taskStatus">{taskDetails.taskStatus}</Typography>
+            <Typography className="taskDate">{taskDetails.taskDate}</Typography>
+            <Box className="editDeleteBox">
+                <ModeEditOutlineRoundedIcon onClick={()=>editTaskDetails(index)}/>
+                <DeleteRoundedIcon />
+            </Box>
         </Card>
     )
 }

@@ -24,6 +24,7 @@
     margin-right: 10px;
     box-shadow: 0px 0px 3px black !important;
     border-radius: 12px !important;
+    position: relative;
     p {
         font-family: main.$text-primary;
     }
@@ -31,6 +32,20 @@
     .taskSubject {
         font-size: 1.2rem;
         font-weight: 600;
+    }
+
+    .editDeleteBox {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        svg:hover {
+            cursor: pointer;
+        }
+        svg:nth-child(2) {
+            margin-left: 12px;
+            margin-right: 5px;
+            color: main.$red;
+        }
     }
 }
 

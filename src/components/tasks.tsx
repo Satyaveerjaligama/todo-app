@@ -2,12 +2,14 @@ import { useState } from 'react';
 import {Box, Grid, Button} from "@mui/material";
 import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
-import { taskObjectProps } from '../utils/contants';
+import { sampleData, taskObjectProps } from '../utils/contants';
 
 const Tasks = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
     const handleModalClose = () => setOpenModal(false);
+    const [allTask, setAllTask] = useState<taskObjectProps[]>(sampleData);
+    const [modalType, setModalType] = useState<string>("add");
     const [taskDetails, setTaskDetails] = useState<taskObjectProps>({
         taskTitle: "",
         taskDescription: "",
@@ -26,13 +28,27 @@ const Tasks = () => {
         setTaskDetails({...taskDetails, [field]: event.target.value});
     }
 
-    const list = [1,2,3,4,5,6,7]
+    const handleAddBtnClick = () => {
+        handleModalClose();
+        setAllTask([...allTask, taskDetails]);
+    }
+
+    const editTaskDetails = (index: number) => {
+        setTaskDetails(allTask[index]);
+        setModalType("edit");
+        handleModalOpen();
+    }
+
     return (
         <Box className="tasksBox">
             <Grid container>
-            {list.map((index) => 
+            {allTask.map((item, index) => 
                 <Grid item xs={12} sm={6} md={4}>
-                    <SingleTaskCard key={index}/>
+                    <SingleTaskCard
+                        taskDetails={item}
+                        index={index}
+                        editTaskDetails={editTaskDetails}
+                    />
                 </Grid>
             )}
             </Grid>
@@ -41,6 +57,7 @@ const Tasks = () => {
                 variant="contained"
                 onClick={()=>{
                     setTaskDetails(emptyObject)
+                    setModalType("add")
                     handleModalOpen()
                 }}
             >
@@ -50,7 +67,9 @@ const Tasks = () => {
                 open = {openModal}
                 handleClose = {handleModalClose}
                 taskObject={taskDetails}
+                modalType={modalType}
                 taskDetailsOnChange={taskDetailsOnChange}
+                handleAddBtnClick={handleAddBtnClick}
             />
         </Box>
     )
