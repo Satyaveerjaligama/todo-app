@@ -6,7 +6,7 @@ const TopBar = () => {
         <AppBar className="topBar">
             <Grid container className="topBar-container">
                 <Grid item>
-                    <Typography>Sample Text</Typography>
+                    <Typography>To Do</Typography>
                 </Grid>
                 <Grid item>
                     <TextField 

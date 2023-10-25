@@ -5,11 +5,13 @@ interface AddTaskModalProps {
     open: boolean;
     handleClose: () => void;
     taskObject: taskObjectProps;
+    handleAddBtnClick: () => void;
+    modalType: string,
     taskDetailsOnChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => void;
 }
 
 const AddTaskModal = (props: AddTaskModalProps) => {
-    const {open, handleClose, taskObject, taskDetailsOnChange} = props
+    const {open, handleClose, taskObject, taskDetailsOnChange, handleAddBtnClick, modalType} = props
 
     return (
         <Modal
@@ -19,7 +21,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
             >
             <Box className="addTaskBox">
                 <Typography variant="h6" sx={{fontWeight: "bold", fontFamily: "Robboto Slab"}} component="h2">
-                    Add Task
+                    {modalType === "add" ? "Add Task" : "Edit Task"}
                 </Typography>
                 <Grid container>
                     <Grid item xs={12}>
@@ -59,13 +61,23 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                         </Button>
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Button
-                            variant="contained"
-                            className="btn"
-                            onClick={handleClose}
-                        >
-                            Add
-                        </Button>
+                        { modalType === "add" ?
+                            <Button
+                                variant="contained"
+                                className="btn"
+                                onClick={handleAddBtnClick}
+                            >
+                                Add
+                            </Button>
+                        :
+                            <Button
+                                variant="contained"
+                                className="btn"
+                                onClick={handleAddBtnClick}
+                            >
+                                Save changes
+                            </Button>
+                        }
                     </Grid>
                 </Grid>
             </Box>
