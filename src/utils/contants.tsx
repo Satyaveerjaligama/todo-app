@@ -5,11 +5,21 @@ export interface taskObjectProps {
     taskDate: string,
 }
 
+export const taskStatusEnum= Object.freeze({
+    pending: "pending",
+    completed: "completed",
+})
+
+export const modalTypeEnum = Object.freeze({
+    add: "add",
+    edit: "edit",
+})
+
 export const sampleData: taskObjectProps[] = [
     {
         taskTitle: "Sample1",
         taskDescription: "Description1",
-        taskStatus: "pending",
+        taskStatus: "completed",
         taskDate: "10-10-2000",
     },
     {

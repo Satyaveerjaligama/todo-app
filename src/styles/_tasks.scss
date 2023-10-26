@@ -47,6 +47,16 @@
             color: main.$red;
         }
     }
+
+    .completedIcon {
+        color: main.$light-green;
+        position: absolute;
+        top: 0px;
+        right: 5px;
+        svg {
+            font-size: larger;
+        }
+    }
 }
 
 .addTaskModal {
@@ -71,8 +81,12 @@
         }
     }
 
-    .taskTitle, .taskDescription, .taskDate {
+    .taskTitle, .taskDescription, .taskDate .MuiFormControl-root {
         width: 100%;
         margin-bottom: 10px;
+    }
+
+    .taskDate .MuiFormControl-root {
+        background-color: rgba(0, 0, 0, 0.06);
     }
 }

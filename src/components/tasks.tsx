@@ -1,31 +1,38 @@
-import { useState } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import {Box, Grid, Button} from "@mui/material";
 import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
-import { sampleData, taskObjectProps } from '../utils/contants';
+import { modalTypeEnum, sampleData, taskObjectProps, taskStatusEnum } from '../utils/contants';
 
 const Tasks = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
     const handleModalClose = () => setOpenModal(false);
     const [allTask, setAllTask] = useState<taskObjectProps[]>(sampleData);
-    const [modalType, setModalType] = useState<string>("add");
+    const [modalType, setModalType] = useState<string>(modalTypeEnum.add);
+    const [activeElementIndex, setActiveElementIndex] = useState<number>(0);
     const [taskDetails, setTaskDetails] = useState<taskObjectProps>({
         taskTitle: "",
         taskDescription: "",
-        taskStatus: "pending",
+        taskStatus: taskStatusEnum.pending,
         taskDate: "",
     });
 
     const emptyObject: taskObjectProps = {
         taskTitle: "",
         taskDescription: "",
-        taskStatus: "pending",
+        taskStatus: taskStatusEnum.pending,
         taskDate: "",
     }
 
-    const taskDetailsOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string) => {
-        setTaskDetails({...taskDetails, [field]: event.target.value});
+    const taskDetailsOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string, index: number) => {
+        if (type === modalTypeEnum.add) {
+            setTaskDetails({...taskDetails, [field]: event.target.value});
+        } else {
+            const allTaskCopy = [...allTask];
+            allTaskCopy[index] = {...allTaskCopy[index], [field]: event.target.value}
+            setAllTask(allTaskCopy);
+        } 
     }
 
     const handleAddBtnClick = () => {
@@ -35,8 +42,25 @@ const Tasks = () => {
 
     const editTaskDetails = (index: number) => {
         setTaskDetails(allTask[index]);
-        setModalType("edit");
+        setModalType(modalTypeEnum.edit);
+        setActiveElementIndex(index);
         handleModalOpen();
+    }
+
+    const deleteTask = (index: number) => {
+        const allTaskCopy = [...allTask];
+        allTaskCopy.splice(index, 1);
+        setAllTask(allTaskCopy);
+    }
+
+    const handleCheckboxChange = (event: BaseSyntheticEvent, index: number) => {
+        const allTaskCopy = [...allTask];
+        if (event.target.checked) {
+            allTaskCopy[index] = {...allTaskCopy[index], taskStatus: taskStatusEnum.completed};
+        } else {
+            allTaskCopy[index] = {...allTaskCopy[index], taskStatus: taskStatusEnum.pending};
+        }
+        setAllTask(allTaskCopy);
     }
 
     return (
@@ -48,6 +72,7 @@ const Tasks = () => {
                         taskDetails={item}
                         index={index}
                         editTaskDetails={editTaskDetails}
+                        deleteTask={deleteTask}
                     />
                 </Grid>
             )}
@@ -57,7 +82,7 @@ const Tasks = () => {
                 variant="contained"
                 onClick={()=>{
                     setTaskDetails(emptyObject)
-                    setModalType("add")
+                    setModalType(modalTypeEnum.add)
                     handleModalOpen()
                 }}
             >
@@ -70,6 +95,8 @@ const Tasks = () => {
                 modalType={modalType}
                 taskDetailsOnChange={taskDetailsOnChange}
                 handleAddBtnClick={handleAddBtnClick}
+                handleCheckboxChange={handleCheckboxChange}
+                index={activeElementIndex}
             />
         </Box>
     )
