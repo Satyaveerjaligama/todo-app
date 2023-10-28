@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 
 $blue: #3A98B9;
-$red: #FF6969;
-$light-green: #B6E2A1;
+$red: #fb654e;
+$light-red: #ffa07a;
+$light-green: #9ad9b1;
+$green: #70bc8b;
 $text-primary: Roboto Slab; 
 
 .topBar {
@@ -39,4 +41,20 @@ $text-primary: Roboto Slab;
 .topBar-container {
     justify-content: space-between;
     align-items: center;
+}
+
+.border-left-green {
+    border-left-color: $green !important;
+}
+
+.border-left-red {
+    border-left-color: $red !important;
+}
+
+.background-color-light-green {
+    background-color: $light-green;
+}
+
+.background-color-light-red {
+    background-color: $light-red;
 }

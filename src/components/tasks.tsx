@@ -3,6 +3,7 @@ import {Box, Grid, Button} from "@mui/material";
 import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
 import { modalTypeEnum, sampleData, taskObjectProps, taskStatusEnum } from '../utils/contants';
+import { Dayjs } from 'dayjs';
 
 const Tasks = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -25,19 +26,24 @@ const Tasks = () => {
         taskDate: "",
     }
 
-    const taskDetailsOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string, index: number) => {
+    const taskDetailsOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string) => {
         if (type === modalTypeEnum.add) {
             setTaskDetails({...taskDetails, [field]: event.target.value});
         } else {
-            const allTaskCopy = [...allTask];
-            allTaskCopy[index] = {...allTaskCopy[index], [field]: event.target.value}
-            setAllTask(allTaskCopy);
+            setTaskDetails({...taskDetails, [field]: event.target.value});
         } 
     }
 
     const handleAddBtnClick = () => {
         handleModalClose();
         setAllTask([...allTask, taskDetails]);
+    }
+
+    const handleSaveChangesClick = (index: number) => {
+        handleModalClose();
+        const allTaskCopy = [...allTask];
+        allTaskCopy[index] = taskDetails;
+        setAllTask(allTaskCopy); 
     }
 
     const editTaskDetails = (index: number) => {
@@ -53,14 +59,18 @@ const Tasks = () => {
         setAllTask(allTaskCopy);
     }
 
-    const handleCheckboxChange = (event: BaseSyntheticEvent, index: number) => {
-        const allTaskCopy = [...allTask];
+    const handleCheckboxChange = (event: BaseSyntheticEvent) => {
         if (event.target.checked) {
-            allTaskCopy[index] = {...allTaskCopy[index], taskStatus: taskStatusEnum.completed};
+            setTaskDetails({...taskDetails, taskStatus: taskStatusEnum.completed});
         } else {
-            allTaskCopy[index] = {...allTaskCopy[index], taskStatus: taskStatusEnum.pending};
+            setTaskDetails({...taskDetails, taskStatus: taskStatusEnum.pending});
         }
-        setAllTask(allTaskCopy);
+    }
+
+    const dateOnChange = (event: Dayjs | null) => {
+        if (event?.format("DD-MM-YYYY") !== "Invalid Date") {
+            setTaskDetails({...taskDetails, taskDate: event?.format("DD-MM-YYYY") as string});
+        }
     }
 
     return (
@@ -97,6 +107,8 @@ const Tasks = () => {
                 handleAddBtnClick={handleAddBtnClick}
                 handleCheckboxChange={handleCheckboxChange}
                 index={activeElementIndex}
+                handleSaveChangesClick={handleSaveChangesClick}
+                dateOnChange={dateOnChange}
             />
         </Box>
     )
