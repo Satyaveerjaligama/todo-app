@@ -1,9 +1,10 @@
-import { useState } from "react";
+// import { useState } from "react";
 import {Modal, Box, Typography, TextField, Button, Grid, FormControlLabel, Checkbox} from "@mui/material"
 import { modalTypeEnum, taskObjectProps, taskStatusEnum } from "../utils/contants";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs, { Dayjs } from "dayjs";
 
 interface AddTaskModalProps {
     open: boolean;
@@ -12,17 +13,15 @@ interface AddTaskModalProps {
     handleAddBtnClick: () => void;
     modalType: string;
     index: number;
-    taskDetailsOnChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string, index : number) => void;
-    handleCheckboxChange: (event: React.BaseSyntheticEvent, index: number)=> void;
+    taskDetailsOnChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string) => void;
+    handleCheckboxChange: (event: React.BaseSyntheticEvent)=> void;
+    handleSaveChangesClick: (index: number)=> void;
+    dateOnChange: (e: Dayjs | null) => void;
 }
 
 const AddTaskModal = (props: AddTaskModalProps) => {
-    const {open, handleClose, taskObject, taskDetailsOnChange, handleAddBtnClick, modalType, handleCheckboxChange, index} = props
-    const [checkBox, setCheckBox] = useState<boolean>(taskObject.taskStatus === taskStatusEnum.completed);
+    const {open, handleClose, taskObject, taskDetailsOnChange, handleAddBtnClick, modalType, handleCheckboxChange, index, handleSaveChangesClick, dateOnChange} = props
 
-    // const dateOnChange = (e: any) => {
-    //     console.log("event", e);
-    // }
     return (
         <Modal
             open={open}
@@ -39,16 +38,16 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             variant="filled"
                             className="taskTitle"
                             label="Task Title"
-                            onChange={(e)=>taskDetailsOnChange(e, "taskTitle", modalType, index)}
+                            onChange={(e)=>taskDetailsOnChange(e, "taskTitle", modalType)}
                             value={taskObject?.taskTitle ? taskObject?.taskTitle : ""}
                         />
                         <div className="taskDate">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
-                                    format="DD/MM/YYYY"
+                                    format="DD-MM-YYYY"
                                     label="Date"
-                                    // onChange={(e)=>taskDetailsOnChange(e, "taskDate", modalType)}
-                                    // onChange={(e)=>dateOnChange(e)}
+                                    onChange={(e)=>dateOnChange(e)}
+                                    value={taskObject?.taskDate ? dayjs(taskObject.taskDate) : null}
                                 />
                             </LocalizationProvider>
                         </div>
@@ -58,18 +57,15 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             multiline
                             rows={2}
                             variant="filled"
-                            onChange={(e)=>taskDetailsOnChange(e, "taskDescription", modalType, index)}
+                            onChange={(e)=>taskDetailsOnChange(e, "taskDescription", modalType)}
                             value={taskObject?.taskDescription ? taskObject?.taskDescription : ""}
                         />
                         <FormControlLabel
                             label="Mark as Completed"
                             control={
                                 <Checkbox
-                                    checked={checkBox}
-                                    onChange={(e)=>{
-                                        setCheckBox(!checkBox)
-                                        handleCheckboxChange(e, index)
-                                    }}
+                                    checked={taskObject.taskStatus === taskStatusEnum.completed}
+                                    onChange={(e)=>handleCheckboxChange(e)}
                                 />
                             }
                         />
@@ -98,7 +94,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             <Button
                                 variant="contained"
                                 className="btn"
-                                onClick={handleAddBtnClick}
+                                onClick={()=>handleSaveChangesClick(index)}
                             >
                                 Save changes
                             </Button>

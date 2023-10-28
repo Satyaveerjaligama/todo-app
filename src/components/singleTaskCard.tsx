@@ -2,7 +2,7 @@ import {Box, Card, Typography} from "@mui/material"
 import { taskObjectProps, taskStatusEnum } from "../utils/contants";
 import ModeEditOutlineRoundedIcon from '@mui/icons-material/ModeEditOutlineRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
-import DomainVerificationRoundedIcon from '@mui/icons-material/DomainVerificationRounded';
+import { convertDateToDisplay } from "../utils/utils";
 
 interface singleTaskCardProps {
     taskDetails: taskObjectProps,
@@ -14,19 +14,15 @@ interface singleTaskCardProps {
 const SingleTaskCard = (props: singleTaskCardProps) => {
     const {taskDetails, index, editTaskDetails, deleteTask} = props;
     return (
-        <Card className="singleTaskCard">
+        <Card className={`singleTaskCard ${taskDetails.taskStatus === taskStatusEnum.completed ? "border-left-green" : "border-left-red"}`}>
             <Typography className="taskSubject">{taskDetails.taskTitle}</Typography>
-            <Typography className="taskDate">{taskDetails.taskDate}</Typography>
+            <Typography className={`taskDate ${taskDetails.taskStatus === taskStatusEnum.completed ? "background-color-light-green" : "background-color-light-red"}`}>
+                {`${convertDateToDisplay(taskDetails.taskDate)}`}
+            </Typography>
             <Box className="editDeleteBox">
                 <ModeEditOutlineRoundedIcon onClick={()=>editTaskDetails(index)}/>
                 <DeleteRoundedIcon onClick={()=>deleteTask(index)}/>
             </Box>
-            { taskDetails.taskStatus === taskStatusEnum.completed && (
-            <Box>
-                <DomainVerificationRoundedIcon className="completedIcon"/>
-            </Box>
-            )}
-            
         </Card>
     )
 }
