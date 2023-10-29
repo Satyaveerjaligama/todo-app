@@ -2,13 +2,19 @@ import { AppBar, Avatar, Grid, TextField, InputAdornment, Button } from "@mui/ma
 import { SearchRounded } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store/store";
-import { updatePage } from "../store/slice/centralDataSlice";
+import { updatePage, updateSearchingString } from "../store/slice/centralDataSlice";
 import { useNavigate } from "react-router-dom";
+import { pageNames } from "../utils/contants";
+import { capitalizeWord } from "../utils/utils";
 
 const TopBar = () => {
-    const navigationList = ['Dashboard', 'All', 'Completed', 'Pending'];
+    const navigationList = [pageNames.dashboard, pageNames.all, pageNames.completed, pageNames.pending];
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+    const searchFieldOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        dispatch(updateSearchingString(event.target.value));
+    }
     return (
         <AppBar className="topBar">
             <Grid container className="topBar-container">
@@ -22,11 +28,11 @@ const TopBar = () => {
                                 dispatch(updatePage(listItem));
                             }}
                         >
-                            {listItem}
+                            {capitalizeWord(listItem)}
                         </Button>
                     )}
                 </Grid>
-                <Grid item sx={{display: "flex", flexDirection: "row"}}>
+                <Grid item className="search-div">
                     <TextField 
                         label="Search"
                         className="search"
@@ -37,6 +43,7 @@ const TopBar = () => {
                                 </InputAdornment>
                             )
                         }}
+                        onChange={(e)=>searchFieldOnChange(e)}
                     />
                     <Avatar>SJ</Avatar>
                 </Grid>

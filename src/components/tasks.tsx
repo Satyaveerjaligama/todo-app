@@ -4,13 +4,15 @@ import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
 import { modalTypeEnum, sampleData, taskObjectProps, taskStatusEnum } from '../utils/contants';
 import { Dayjs } from 'dayjs';
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../store/store';
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../store/store';
 import { storeTaskList } from '../store/slice/centralDataSlice';
 
 
 const Tasks = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const page: string = useSelector((state: RootState)=> state.centralDataSlice.page);
+    const searchingString: string = useSelector((state: RootState)=> state.centralDataSlice.searchingString);
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
     const handleModalClose = () => setOpenModal(false);
@@ -82,15 +84,20 @@ const Tasks = () => {
     return (
         <Box className="tasksBox">
             <Grid container>
-            {allTask.map((item, index) => 
-                <Grid item key={index} xs={12} sm={6} md={4}>
-                    <SingleTaskCard
-                        taskDetails={item}
-                        index={index}
-                        editTaskDetails={editTaskDetails}
-                        deleteTask={deleteTask}
-                    />
-                </Grid>
+            {allTask.map((item, index) =>
+                ((page == item.taskStatus || page==="all") && (searchingString === "" || (item.taskTitle.toLowerCase()).includes(searchingString.toLowerCase())) ?
+                    (
+                    <Grid item key={index} xs={12} sm={6} md={4}>
+                        <SingleTaskCard
+                            taskDetails={item}
+                            index={index}
+                            editTaskDetails={editTaskDetails}
+                            deleteTask={deleteTask}
+                        />
+                    </Grid>
+                    ) 
+                    : ""
+                )
             )}
             </Grid>
             <Button
