@@ -58,3 +58,15 @@ $text-primary: Roboto Slab;
 .background-color-light-red {
     background-color: $light-red;
 }
+
+.text-decoration-none {
+    text-decoration: none !important;
+}
+
+.nav-bar-options {
+    color: white;
+}
+
+.text-primary {
+    font-family: $text-primary !important;
+}
