@@ -64,7 +64,11 @@ $text-primary: Roboto Slab;
 }
 
 .nav-bar-options {
-    color: white;
+    color: white !important;
+    text-transform: capitalize !important;
+    margin:0px 10px !important;
+    font-weight: 500 !important;
+    font-size: medium !important;
 }
 
 .text-primary {

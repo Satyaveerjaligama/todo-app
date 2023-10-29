@@ -83,7 +83,7 @@ const Tasks = () => {
         <Box className="tasksBox">
             <Grid container>
             {allTask.map((item, index) => 
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item key={index} xs={12} sm={6} md={4}>
                     <SingleTaskCard
                         taskDetails={item}
                         index={index}

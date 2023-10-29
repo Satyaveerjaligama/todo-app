@@ -9,8 +9,9 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />}>
-          </Route>
+          {["/", "/all", "/completed", "/pending"].map((path: string, index: number) =>
+            <Route path={path} key={index} element={<Home />}></Route>
+          )}
         </Routes>
       </BrowserRouter>
     </>
