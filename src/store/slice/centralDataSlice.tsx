@@ -3,11 +3,13 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 import { taskObjectProps } from "../../utils/contants"
 
 export interface initialStateInterface {
-    taskList: taskObjectProps[]
+    taskList: taskObjectProps[],
+    page: string,
 }
 
 const initialState: initialStateInterface = {
-    taskList: []
+    taskList: [],
+    page: "Dashboard",
 }
 
 const centralDataSlice = createSlice({
@@ -16,10 +18,13 @@ const centralDataSlice = createSlice({
     reducers: {
         storeTaskList: (state, action: PayloadAction<taskObjectProps[]>) => {
             state.taskList = action.payload
+        },
+        updatePage: (state, action: PayloadAction<string>) => {
+            state.page = action.payload
         }
     }
 })
 
-export const { storeTaskList } = centralDataSlice.actions
+export const { storeTaskList, updatePage } = centralDataSlice.actions
 
 export default centralDataSlice.reducer
