@@ -2,7 +2,7 @@ import { AppBar, Typography, Avatar, Grid, TextField, InputAdornment } from "@mu
 import { SearchRounded } from "@mui/icons-material";
 
 const TopBar = () => {
-    const navigationList = ['DashBoard', 'All', 'Completed', 'Pending'];
+    const navigationList = ['Dashboard', 'All', 'Completed', 'Pending'];
     return (
         <AppBar className="topBar">
             <Grid container className="topBar-container">

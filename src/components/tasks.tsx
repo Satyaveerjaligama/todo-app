@@ -4,8 +4,13 @@ import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
 import { modalTypeEnum, sampleData, taskObjectProps, taskStatusEnum } from '../utils/contants';
 import { Dayjs } from 'dayjs';
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store/store';
+import { storeTaskList } from '../store/slice/centralDataSlice';
+
 
 const Tasks = () => {
+    const dispatch = useDispatch<AppDispatch>();
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
     const handleModalClose = () => setOpenModal(false);
@@ -37,6 +42,7 @@ const Tasks = () => {
     const handleAddBtnClick = () => {
         handleModalClose();
         setAllTask([...allTask, taskDetails]);
+        dispatch(storeTaskList([...allTask, taskDetails]));
     }
 
     const handleSaveChangesClick = (index: number) => {
