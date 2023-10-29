@@ -74,3 +74,12 @@ $text-primary: Roboto Slab;
 .text-primary {
     font-family: $text-primary !important;
 }
+
+.search-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .MuiAvatar-root {
+        margin: 0px 10px;
+    }
+}

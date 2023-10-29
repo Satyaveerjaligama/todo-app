@@ -5,11 +5,13 @@ import { taskObjectProps } from "../../utils/contants"
 export interface initialStateInterface {
     taskList: taskObjectProps[],
     page: string,
+    searchingString: string,
 }
 
 const initialState: initialStateInterface = {
     taskList: [],
     page: "Dashboard",
+    searchingString: "",
 }
 
 const centralDataSlice = createSlice({
@@ -21,10 +23,13 @@ const centralDataSlice = createSlice({
         },
         updatePage: (state, action: PayloadAction<string>) => {
             state.page = action.payload
+        },
+        updateSearchingString: (state, action: PayloadAction<string>) => {
+            state.searchingString = action.payload
         }
     }
 })
 
-export const { storeTaskList, updatePage } = centralDataSlice.actions
+export const { storeTaskList, updatePage, updateSearchingString } = centralDataSlice.actions
 
 export default centralDataSlice.reducer

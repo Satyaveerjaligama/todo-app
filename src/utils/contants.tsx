@@ -15,6 +15,13 @@ export const modalTypeEnum = Object.freeze({
     edit: "edit",
 })
 
+export const pageNames = Object.freeze({
+    dashboard: "dashboard",
+    all: "all",
+    pending: "pending",
+    completed: "completed",
+})
+
 export const monthsList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
 
 export const sampleData: taskObjectProps[] = [
