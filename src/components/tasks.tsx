@@ -2,7 +2,7 @@ import { BaseSyntheticEvent, useState } from 'react';
 import {Box, Grid, Button} from "@mui/material";
 import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
-import { modalTypeEnum, sampleData, taskObjectProps, taskStatusEnum } from '../utils/contants';
+import { modalTypeEnum, taskObjectProps, taskStatusEnum } from '../utils/contants';
 import { Dayjs } from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/store';
@@ -16,7 +16,7 @@ const Tasks = () => {
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
     const handleModalClose = () => setOpenModal(false);
-    const [allTask, setAllTask] = useState<taskObjectProps[]>(sampleData);
+    const [allTask, setAllTask] = useState<taskObjectProps[]>(useSelector((state: RootState)=>state.centralDataSlice.taskList));
     const [modalType, setModalType] = useState<string>(modalTypeEnum.add);
     const [activeElementIndex, setActiveElementIndex] = useState<number>(0);
     const [taskDetails, setTaskDetails] = useState<taskObjectProps>({
@@ -51,7 +51,8 @@ const Tasks = () => {
         handleModalClose();
         const allTaskCopy = [...allTask];
         allTaskCopy[index] = taskDetails;
-        setAllTask(allTaskCopy); 
+        setAllTask(allTaskCopy);
+        dispatch(storeTaskList(allTaskCopy));
     }
 
     const editTaskDetails = (index: number) => {
@@ -65,6 +66,7 @@ const Tasks = () => {
         const allTaskCopy = [...allTask];
         allTaskCopy.splice(index, 1);
         setAllTask(allTaskCopy);
+        dispatch(storeTaskList(allTaskCopy));
     }
 
     const handleCheckboxChange = (event: BaseSyntheticEvent) => {
