@@ -83,3 +83,12 @@ $text-primary: Roboto Slab;
         margin: 0px 10px;
     }
 }
+
+.error-msg {
+    color: $red;
+    font-size: small !important;
+}
+
+.mb-1 {
+    margin-bottom: 8px !important;
+}

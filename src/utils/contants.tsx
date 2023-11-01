@@ -5,6 +5,11 @@ export interface taskObjectProps {
     taskDate: string,
 }
 
+export interface taskErrorsProps {
+    taskTitle: string,
+    taskDate: string,
+}
+
 export const taskStatusEnum= Object.freeze({
     pending: "pending",
     completed: "completed",

@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import {Modal, Box, Typography, TextField, Button, Grid, FormControlLabel, Checkbox} from "@mui/material"
-import { modalTypeEnum, taskObjectProps, taskStatusEnum } from "../utils/contants";
+import { modalTypeEnum, taskErrorsProps, taskObjectProps, taskStatusEnum } from "../utils/contants";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -13,6 +13,7 @@ interface AddTaskModalProps {
     handleAddBtnClick: () => void;
     modalType: string;
     index: number;
+    errors: taskErrorsProps;
     taskDetailsOnChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string) => void;
     handleCheckboxChange: (event: React.BaseSyntheticEvent)=> void;
     handleSaveChangesClick: (index: number)=> void;
@@ -20,7 +21,7 @@ interface AddTaskModalProps {
 }
 
 const AddTaskModal = (props: AddTaskModalProps) => {
-    const {open, handleClose, taskObject, taskDetailsOnChange, handleAddBtnClick, modalType, handleCheckboxChange, index, handleSaveChangesClick, dateOnChange} = props
+    const {open, handleClose, taskObject, errors, taskDetailsOnChange, handleAddBtnClick, modalType, handleCheckboxChange, index, handleSaveChangesClick, dateOnChange} = props
 
     return (
         <Modal
@@ -29,7 +30,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
             className="addTaskModal"
             >
             <Box className="addTaskBox">
-                <Typography variant="h6" sx={{fontWeight: "bold", fontFamily: "Robboto Slab"}} component="h2">
+                <Typography variant="h6" sx={{fontWeight: "bold", fontFamily: "Roboto Slab"}} component="h2">
                     {modalType === modalTypeEnum.add ? "Add Task" : "Edit Task"}
                 </Typography>
                 <Grid container>
@@ -41,6 +42,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             onChange={(e)=>taskDetailsOnChange(e, "taskTitle", modalType)}
                             value={taskObject?.taskTitle ? taskObject?.taskTitle : ""}
                         />
+                        <Typography className="error-msg mb-1">{errors.taskTitle}</Typography>
                         <div className="taskDate">
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
@@ -51,9 +53,10 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                                 />
                             </LocalizationProvider>
                         </div>
+                        <Typography className="error-msg mb-1">{errors.taskDate}</Typography>
                         <TextField
                             label="Description"
-                            className="taskDescription"
+                            className="taskDescription mb-1"
                             multiline
                             rows={2}
                             variant="filled"
@@ -61,6 +64,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             value={taskObject?.taskDescription ? taskObject?.taskDescription : ""}
                         />
                         <FormControlLabel
+                            className="mb-1"
                             label="Mark as Completed"
                             control={
                                 <Checkbox

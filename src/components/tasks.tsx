@@ -2,11 +2,12 @@ import { BaseSyntheticEvent, useState } from 'react';
 import {Box, Grid, Button} from "@mui/material";
 import SingleTaskCard from "./singleTaskCard";
 import AddTaskModal from "./addTaskModal";
-import { modalTypeEnum, taskObjectProps, taskStatusEnum } from '../utils/contants';
+import { modalTypeEnum, taskErrorsProps, taskObjectProps, taskStatusEnum } from '../utils/contants';
 import { Dayjs } from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/store';
 import { storeTaskList } from '../store/slice/centralDataSlice';
+import { addTaskValidations } from '../utils/validations/addTaskValidations';
 
 
 const Tasks = () => {
@@ -19,6 +20,10 @@ const Tasks = () => {
     const [allTask, setAllTask] = useState<taskObjectProps[]>(useSelector((state: RootState)=>state.centralDataSlice.taskList));
     const [modalType, setModalType] = useState<string>(modalTypeEnum.add);
     const [activeElementIndex, setActiveElementIndex] = useState<number>(0);
+    const [errors, setErrors] = useState<taskErrorsProps>({
+        taskTitle: "",
+        taskDate: "",
+    });
     const [taskDetails, setTaskDetails] = useState<taskObjectProps>({
         taskTitle: "",
         taskDescription: "",
@@ -42,17 +47,27 @@ const Tasks = () => {
     }
 
     const handleAddBtnClick = () => {
-        handleModalClose();
-        setAllTask([...allTask, taskDetails]);
-        dispatch(storeTaskList([...allTask, taskDetails]));
+        const {errors, isValid} = addTaskValidations(taskDetails);
+        if (isValid) {
+            handleModalClose();
+            setAllTask([...allTask, taskDetails]);
+            dispatch(storeTaskList([...allTask, taskDetails]));
+        } else {
+            setErrors(errors);
+        }
     }
 
     const handleSaveChangesClick = (index: number) => {
-        handleModalClose();
-        const allTaskCopy = [...allTask];
-        allTaskCopy[index] = taskDetails;
-        setAllTask(allTaskCopy);
-        dispatch(storeTaskList(allTaskCopy));
+        const {errors, isValid} = addTaskValidations(taskDetails);
+        if (isValid) {
+            handleModalClose();
+            const allTaskCopy = [...allTask];
+            allTaskCopy[index] = taskDetails;
+            setAllTask(allTaskCopy);
+            dispatch(storeTaskList(allTaskCopy));
+        } else {
+            setErrors(errors);
+        }
     }
 
     const editTaskDetails = (index: number) => {
@@ -118,6 +133,7 @@ const Tasks = () => {
                 handleClose = {handleModalClose}
                 taskObject={taskDetails}
                 modalType={modalType}
+                errors={errors}
                 taskDetailsOnChange={taskDetailsOnChange}
                 handleAddBtnClick={handleAddBtnClick}
                 handleCheckboxChange={handleCheckboxChange}
