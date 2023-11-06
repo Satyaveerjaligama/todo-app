@@ -16,7 +16,6 @@ const Tasks = () => {
     const searchingString: string = useSelector((state: RootState)=> state.centralDataSlice.searchingString);
     const [openModal, setOpenModal] = useState(false);
     const handleModalOpen = () => setOpenModal(true);
-    const handleModalClose = () => setOpenModal(false);
     const [allTask, setAllTask] = useState<taskObjectProps[]>(useSelector((state: RootState)=>state.centralDataSlice.taskList));
     const [modalType, setModalType] = useState<string>(modalTypeEnum.add);
     const [activeElementIndex, setActiveElementIndex] = useState<number>(0);
@@ -37,6 +36,11 @@ const Tasks = () => {
         taskStatus: taskStatusEnum.pending,
         taskDate: "",
     }
+
+    const handleModalClose = () => {
+        setErrors({taskTitle: "", taskDate: ""});
+        setOpenModal(false)
+    };
 
     const taskDetailsOnChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: string, type: string) => {
         if (type === modalTypeEnum.add) {

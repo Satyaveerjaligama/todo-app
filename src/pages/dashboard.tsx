@@ -40,12 +40,13 @@ const Dashboard = () => {
             <Box className="dashboard" sx={{paddingTop: "100px"}}>
                 <Grid container>
                     {cardData.map((item)=>
-                        <Grid item xs={12} sm={6} md={3}>
+                        <Grid item key={item.type} xs={12} sm={6} md={3}>
                             <DashBoardCard type={item.type} value={item.value}/>
                         </Grid>
                     )}
                 </Grid>
                 <PieChart
+                    className="dashboard-piechart"
                     series={[
                         {
                             data:[

@@ -7,42 +7,6 @@ $light-green: #9ad9b1;
 $green: #70bc8b;
 $text-primary: Roboto Slab; 
 
-.topBar {
-    background-color: $blue !important;
-    padding: 10px;
-
-    .search {
-        label {
-            color: white;
-        }
-
-        .MuiOutlinedInput-root{
-            border-radius: 50px;
-            input {
-                color: white;
-            }
-        }
-
-        .MuiOutlinedInput-root.Mui-focused fieldset{
-            border-color: white;
-        }
-
-        .MuiOutlinedInput-notchedOutline, .MuiOutlinedInput-notchedOutline:hover {
-            border-color: white ;
-        }
-
-        .MuiInputAdornment-root {
-            color: white;
-        }
-
-    }
-}
-
-.topBar-container {
-    justify-content: space-between;
-    align-items: center;
-}
-
 .border-left-green {
     border-left-color: $green !important;
 }

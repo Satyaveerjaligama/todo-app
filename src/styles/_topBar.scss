@@ -1,0 +1,62 @@
+@use "../main";
+
+.topBar {
+    background-color: main.$blue !important;
+    padding: 10px;
+
+    .search {
+        label {
+            color: white;
+        }
+
+        .MuiOutlinedInput-root{
+            border-radius: 50px;
+            input {
+                color: white;
+            }
+        }
+
+        .MuiOutlinedInput-root.Mui-focused fieldset{
+            border-color: white;
+        }
+
+        .MuiOutlinedInput-notchedOutline, .MuiOutlinedInput-notchedOutline:hover {
+            border-color: white ;
+        }
+
+        .MuiInputAdornment-root {
+            color: white;
+        }
+
+    }
+}
+
+.topBar-container {
+    justify-content: space-between;
+    align-items: center;
+
+    .navigation-options {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .hamburger {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 899.98px) {
+    .navigation-options, .avatar {
+        display: none !important;
+    }
+    
+    .hamburger {
+        display: block !important;
+    }
+}
+
+@media screen and (max-width: 699.98px) {
+    .addTaskBox {
+        width: 70vw !important;
+    }
+}

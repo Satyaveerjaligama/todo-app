@@ -63,16 +63,18 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             onChange={(e)=>taskDetailsOnChange(e, "taskDescription", modalType)}
                             value={taskObject?.taskDescription ? taskObject?.taskDescription : ""}
                         />
-                        <FormControlLabel
-                            className="mb-1"
-                            label="Mark as Completed"
-                            control={
-                                <Checkbox
-                                    checked={taskObject.taskStatus === taskStatusEnum.completed}
-                                    onChange={(e)=>handleCheckboxChange(e)}
-                                />
-                            }
-                        />
+                        {modalType === modalTypeEnum.edit &&
+                            <FormControlLabel
+                                className="mb-1"
+                                label="Mark as Completed"
+                                control={
+                                    <Checkbox
+                                        checked={taskObject.taskStatus === taskStatusEnum.completed}
+                                        onChange={(e)=>handleCheckboxChange(e)}
+                                    />
+                                }
+                            />
+                        }
                     </Grid>
                 </Grid>
                 <Grid container className="btn-container">
@@ -85,7 +87,7 @@ const AddTaskModal = (props: AddTaskModalProps) => {
                             Cancel
                         </Button>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} className="addBtn">
                         { modalType === modalTypeEnum.add ?
                             <Button
                                 variant="contained"

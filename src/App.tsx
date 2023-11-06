@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import "./main.scss"
 import "../src/styles/_tasks.scss"
 import "../src/styles/_dashboard.scss"
+import "../src/styles/_topBar.scss"
 
 function App() {
 
