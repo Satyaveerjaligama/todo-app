@@ -13,7 +13,7 @@ We also have a Dashboard section where user can check the number of pending and 
 
 ## Technologies/Languages Used
 - TypeScript
-- React
+- React JS
 - Redux Toolkit
 - Vite JS
 - Sass
