@@ -1,8 +1,8 @@
 # Todo App
-This App will be helpful for manage day to day tasks.   
-It allow the users to Create, Updated, Delete the tasks.   
+This App will be helpful for managing day-to-day tasks.   
+It allows the users to Create, Update, Delete the tasks.   
 Using the search option, user can search for a specific task.   
-We also have a Dashboard section where user can check the number of pending and completed tasks.
+We also have a Dashboard section where users can check the number of pending and completed tasks.
 
 ## Routes
 [Dashboard](http://localhost:3001/dashboard)  
