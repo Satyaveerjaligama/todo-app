@@ -1,4 +1,4 @@
-# Todo App
+# To Do App
 This App will be helpful for managing day-to-day tasks.   
 It allows the user to Create, Update, Delete the tasks.   
 Using the search option, user can search for a specific task.   
